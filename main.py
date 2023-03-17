@@ -6,7 +6,7 @@ df = pd.DataFrame({'trnsct_id': [1, 2]})
 
 
 
-
+##########################
 
 class Transaction:
     # constructor buat dataframe kosong sebagai keranjang belanja
