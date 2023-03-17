@@ -63,13 +63,18 @@ class Transaction:
         self.cart.drop(deleted_item.index, inplace=True)
         print(f"Berhasil mengeluarkan {nama_item} dari keranjang belanja...")
         if self.cart.empty:
-            print("keranjang belanja anda kosong, ayo berbelanja!")
+            print("keranjang belanja anda kosong, mari berbelanja!")
         else:
             print(self.cart)
         print("")
     #############################
 
-    
+    #### empty cart feature ####
+    def reset_transaction(self):
+        self.cart = self.cart.iloc[0:0]
+        if self.cart.empty:
+            print("Berhasil mengosongkan keranjang belanja, mari berbelanja!")
+    ############################    
 
     
 
@@ -78,4 +83,5 @@ test1.add_item()
 test1.update_item_name('tepung', 'tepung terigu')
 test1.update_item_qty('tepung terigu', 200)
 test1.update_item_price('tepung terigu', 10000000000)
-test1.delete_item('tepung terigu')
+#test1.delete_item('tepung terigu')
+test1.reset_transaction()
