@@ -25,14 +25,14 @@ class Transaction:
                                  'Jumlah Item': [jumlah_item],
                                  'Harga/Item': [harga_per_item]})
         self.cart = pd.concat([self.cart, new_item], ignore_index=True)
-        print(f"Berhasil memasukkan {nama_item} seharga Rp. {harga_per_item} sebanyak {jumlah_item} buah ke keranjang")
+        print(f"Berhasil memasukkan {nama_item} seharga Rp. {harga_per_item} sebanyak {jumlah_item} buah ke keranjang...")
         print(self.cart)
         print("")
     ##########################
 
     #### update item features ####
     def update_item_name(self, nama_item, nama_item_updated):
-        ### cari nama item di self.cart['Nama Item'] pake for trus ganti jadi nama_item_updated
+        # masukkan row yang diinginkan ke lalu ganti nilai di kolom 'Nama Item'
         updated_row = self.cart['Nama Item'] == nama_item
         self.cart.loc[updated_row, 'Nama Item'] = nama_item_updated
         print("")
@@ -41,17 +41,17 @@ class Transaction:
         print("")
 
     def update_item_qty(self, nama_item, qty_item_updated):
-        for item in self.cart['Nama Item']:
-            if item == nama_item:
-                self.cart.loc[self.cart['Nama Item'] == nama_item, 'Jumlah Item'] = qty_item_updated
+        updated_row = self.cart['Nama Item'] == nama_item
+        self.cart.loc[updated_row, 'Jumlah Item'] = qty_item_updated
+        print("")
         print(f"Jumlah Item {nama_item} telah diupdate menjadi {qty_item_updated} buah")
         print(self.cart)
         print("")
 
     def update_item_price(self, nama_item, price_item_updated):
-        for item in self.cart['Nama Item']:
-            if item == nama_item:
-                self.cart.loc[self.cart['Nama Item'] == nama_item, 'Harga/Item'] = price_item_updated
+        updated_row = self.cart['Nama Item'] == nama_item
+        self.cart.loc[updated_row, 'Harga/Item'] = price_item_updated
+        print("")
         print(f"Harga Item {nama_item} telah diupdate menjadi Rp. {price_item_updated}")
         print(self.cart)
         print("")
@@ -61,8 +61,11 @@ class Transaction:
     def delete_item(self, nama_item):
         deleted_item = self.cart.loc[self.cart['Nama Item'] == nama_item]
         self.cart.drop(deleted_item.index, inplace=True)
-        print(f"Berhasil mengeluarkan {nama_item} dari keranjang belanja")
-        print(self.cart)
+        print(f"Berhasil mengeluarkan {nama_item} dari keranjang belanja...")
+        if self.cart.empty:
+            print("keranjang belanja anda kosong, ayo berbelanja!")
+        else:
+            print(self.cart)
         print("")
     #############################
 
