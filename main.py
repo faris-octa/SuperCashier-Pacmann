@@ -33,9 +33,9 @@ class Transaction:
     #### update item features ####
     def update_item_name(self, nama_item, nama_item_updated):
         ### cari nama item di self.cart['Nama Item'] pake for trus ganti jadi nama_item_updated
-        for item in self.cart['Nama Item']:
-            if item == nama_item:
-                self.cart.loc[self.cart['Nama Item'] == nama_item, 'Nama Item'] = nama_item_updated
+        updated_row = self.cart['Nama Item'] == nama_item
+        self.cart.loc[updated_row, 'Nama Item'] = nama_item_updated
+        print("")
         print(f"Item {nama_item} telah diupdate menjadi {nama_item_updated}")
         print(self.cart)
         print("")
@@ -57,8 +57,14 @@ class Transaction:
         print("")
     ##############################
 
-    
-
+    #### delete item feature ####
+    def delete_item(self, nama_item):
+        deleted_item = self.cart.loc[self.cart['Nama Item'] == nama_item]
+        self.cart.drop(deleted_item.index, inplace=True)
+        print(f"Berhasil mengeluarkan {nama_item} dari keranjang belanja")
+        print(self.cart)
+        print("")
+    #############################
 
     
 
@@ -69,3 +75,4 @@ test1.add_item()
 test1.update_item_name('tepung', 'tepung terigu')
 test1.update_item_qty('tepung terigu', 200)
 test1.update_item_price('tepung terigu', 10000000000)
+test1.delete_item('tepung terigu')
