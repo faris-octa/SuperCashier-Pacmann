@@ -1,6 +1,13 @@
 import pandas as pd
+import sqlite3
 
-
+# create a connection to database
+conn = sqlite3.connect('database.db')
+cursor = conn.cursor()
+# cursor.execute('''CREATE TABLE IF NOT EXISTS transaction
+#                 (nama_item TEXT,
+#                 jumlah_item INT,
+#                 harga_item INT)''')
 #### dummy databases ####
 df = pd.DataFrame({'trnsct_id': [1, 2]})
 
@@ -76,12 +83,46 @@ class Transaction:
             print("Berhasil mengosongkan keranjang belanja, mari berbelanja!")
     ############################    
 
-    
+# commit and close database
+conn.commit()
+conn.close()    
 
 test1 = Transaction()
-test1.add_item()
-test1.update_item_name('tepung', 'tepung terigu')
-test1.update_item_qty('tepung terigu', 200)
-test1.update_item_price('tepung terigu', 10000000000)
-#test1.delete_item('tepung terigu')
-test1.reset_transaction()
+# test1.add_item()
+# test1.update_item_name('tepung', 'tepung terigu')
+# test1.update_item_qty('tepung terigu', 200)
+# test1.update_item_price('tepung terigu', 10000000000)
+# #test1.delete_item('tepung terigu')
+# test1.reset_transaction()
+
+if __name__ == "__main__":
+    test1 = Transaction()
+
+    while True:
+        print("\nPilih fungsi yang ingin dieksekusi:")
+        print("1. Input item")
+        print("2. Update item")
+        print("3. Delete item")
+        print("4. Check keranjang belanja")
+        print("5. Checkout / Keluar")
+
+        choice = input("Masukkan pilihan anda (1/2/3/4): ")
+        print(choice)
+        break
+
+        # if choice == '1':
+        #     amount = float(input("Masukkan jumlah yang ingin disetor: "))
+        #     t.deposit(amount)
+        #     print("Setor tunai sebesar ${} berhasil dilakukan.".format(amount))
+        # elif choice == '2':
+        #     amount = float(input("Masukkan jumlah yang ingin ditarik: "))
+        #     t.withdraw(amount)
+        #     print("Tarik tunai sebesar ${} berhasil dilakukan.".format(amount))
+        # elif choice == '3':
+        #     t.show_balance()
+        # elif choice == '4':
+        #     break
+        # else:
+        #     print("Pilihan tidak valid. Silahkan pilih angka 1, 2, 3, atau 4.")
+
+    print("Terima kasih telah menggunakan layanan kami.")
