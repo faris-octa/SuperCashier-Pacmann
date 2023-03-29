@@ -1,39 +1,16 @@
 import pandas as pd
 import sqlite3
 
-# create a connection to database
-try:
-    conn = sqlite3.connect('database.db')
-    print('berhasil konek')
-except sqlite3.Error as error:
-    print('gagal konek:', error)
-cursor = conn.cursor()
-cursor.execute('''CREATE TABLE IF NOT EXISTS transactions 
-                (no_id INT, 
-                nama_item TEXT, 
-                jumlah_item INT, 
-                harga INT, 
-                total_harga INT, 
-                diskon INT, 
-                harga_diskon INT
-                )''')
-
-#### dummy databases ####
-
 # dummy inventory
 inventory = ['gula', 'minyak goreng', 'beras']
 
 ##########################
 
-
 class Transaction:
     # constructor buat dataframe kosong sebagai keranjang belanja
-    def __init__(self):
-        cursor.execute('SELECT MAX(no_id) FROM transactions')
-        self.no_id = cursor.fetchone()[0] + 1
+    def __init__(self):      
         self.cart = pd.DataFrame(columns=['Nama Item', 'Jumlah Item', 'Harga/Item', 'Harga Total'])
-        print("\nSelamat datang di e-Mart")
-        print(self.no_id)
+        print("\n------------Selamat datang di e-Mart------------")
 
     #### add item feature ####
     def add_item(self):
@@ -93,7 +70,7 @@ class Transaction:
     def reset_transaction(self):
         self.cart = self.cart.iloc[0:0]
         return self.cart
-    #############################
+    ############################
 
     #### check order feature ####
     def check_order(self):
@@ -108,17 +85,49 @@ class Transaction:
     #############################
 
     # insert data to database func.
-    def inser_to_table(source_data):
+    def insert_to_table(source_data):
+                # create a connection to database
+        try:
+            conn = sqlite3.connect(source_data)
+            print('berhasil konek')
+        except sqlite3.Error as error:
+            print('gagal konek:', error)
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS transactions 
+                        (no_id INT, 
+                        nama_item TEXT, 
+                        jumlah_item INT, 
+                        harga INT, 
+                        total_harga INT, 
+                        Diskon INT, 
+                        harga_Diskon INT
+                        )''')
+        
+        # GET no_id -> no_id terakhir + 1
+        cursor.execute('SELECT MAX(no_id) FROM transactions')
+        no_id = cursor.fetchone()[0] + 1
+
+        # conn.commit()
+        # conn.close() 
         pass
 
     #### checkout feature ####
-    def check_out():
+    def check_out(self):
         # modifikasi cart agar strukturnya sesuai dengan database
-        pass
+        receipt = self.cart
+        receipt['Diskon'] = 0
+        receipt.loc[receipt['Harga Total'] > 200_000, 'Diskon'] = receipt['Harga Total'] * 0.05
+        receipt.loc[receipt['Harga Total'] > 300_000, 'Diskon'] = receipt['Harga Total'] * 0.06
+        receipt.loc[receipt['Harga Total'] > 500_000, 'Diskon'] = receipt['Harga Total'] * 0.07
 
-# commit and close database
-conn.commit()
-# conn.close()    
+        receipt['Harga Diskon'] = receipt['Harga Total'] - receipt['Diskon']
+
+        total = receipt['Harga Diskon'].sum()
+
+        print(f'\nTotal nilai belanjaan: {total}')
+        return receipt
+
+ 
 
 if __name__ == "__main__":
     trnsct_123 = Transaction()
@@ -190,7 +199,7 @@ if __name__ == "__main__":
             print("Pilihan tidak valid. Silahkan pilih angka 1, 2, 3, 4 atau 5")
         
         
-        
+        print(trnsct_123.check_out())
         print(trnsct_123.cart['Nama Item'].to_list())
     
     print("Terima kasih telah menggunakan layanan kami.")
