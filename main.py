@@ -2,15 +2,23 @@ import pandas as pd
 import sqlite3
 
 # create a connection to database
-conn = sqlite3.connect('database.db')
+try:
+    conn = sqlite3.connect('database.db')
+    print('berhasil konek')
+except sqlite3.Error as error:
+    print('gagal konek:', error)
 cursor = conn.cursor()
-# cursor.execute('''CREATE TABLE IF NOT EXISTS transaction
-#                 (nama_item TEXT,
-#                 jumlah_item INT,
-#                 harga_item INT)''')
+cursor.execute('''CREATE TABLE IF NOT EXISTS transactions 
+                (no_id INT, 
+                nama_item TEXT, 
+                jumlah_item INT, 
+                harga INT, 
+                total_harga INT, 
+                diskon INT, 
+                harga_diskon INT
+                )''')
 
 #### dummy databases ####
-df = pd.DataFrame({'trnsct_id': [1, 2]})
 
 # dummy inventory
 inventory = ['gula', 'minyak goreng', 'beras']
@@ -96,21 +104,18 @@ class Transaction:
         print(self.cart) #total harga 
     #############################
 
+    # insert data to database func.
+    def inser_to_table(source_data):
+        pass
+
     #### checkout feature ####
     def check_out():
+        # modifikasi cart agar strukturnya sesuai dengan database
         pass
 
 # commit and close database
 conn.commit()
 conn.close()    
-
-# test1 = Transaction()
-# test1.add_item()
-# test1.update_item_name('tepung', 'tepung terigu')
-# test1.update_item_qty('tepung terigu', 200)
-# test1.update_item_price('tepung terigu', 10000000000)
-# #test1.delete_item('tepung terigu')
-# test1.reset_transaction()
 
 if __name__ == "__main__":
     trnsct_123 = Transaction()
@@ -156,7 +161,6 @@ if __name__ == "__main__":
                     print("Pilihan tidak valid")
 
         elif choice == '3':
-            pass
             print("\nPilih opsi:")
             print("1. Keluarkan satu barang")
             print("2. Kosongkan keranjang belanja")
@@ -178,6 +182,12 @@ if __name__ == "__main__":
                 continue
             else:
                 trnsct_123.check_order()
+
+        else:
+            print("Pilihan tidak valid. Silahkan pilih angka 1, 2, 3, 4 atau 5")
+        
+        
+        
         print(trnsct_123.cart['Nama Item'].to_list())
 
         # if choice == '1':
