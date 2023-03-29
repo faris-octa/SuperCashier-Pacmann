@@ -74,7 +74,18 @@ class Transaction:
         self.cart = self.cart.iloc[0:0]
         if self.cart.empty:
             print("Berhasil mengosongkan keranjang belanja, mari berbelanja!")
-    ############################    
+    ############################
+
+
+    #### check order feature ####
+    def check_order(self):
+        for item in cart:
+            if item not in [list_supply_item]:
+                print('Terdapat kesalahan input data')
+            else:
+                print('Pemesanan sudah benar')
+        print(self.cart)
+    #############################    
 
     
 
