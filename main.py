@@ -29,8 +29,11 @@ inventory = ['gula', 'minyak goreng', 'beras']
 class Transaction:
     # constructor buat dataframe kosong sebagai keranjang belanja
     def __init__(self):
+        cursor.execute('SELECT MAX(no_id) FROM transactions')
+        self.no_id = cursor.fetchone()[0] + 1
         self.cart = pd.DataFrame(columns=['Nama Item', 'Jumlah Item', 'Harga/Item', 'Harga Total'])
         print("\nSelamat datang di e-Mart")
+        print(self.no_id)
 
     #### add item feature ####
     def add_item(self):
@@ -115,7 +118,7 @@ class Transaction:
 
 # commit and close database
 conn.commit()
-conn.close()    
+# conn.close()    
 
 if __name__ == "__main__":
     trnsct_123 = Transaction()
@@ -189,20 +192,5 @@ if __name__ == "__main__":
         
         
         print(trnsct_123.cart['Nama Item'].to_list())
-
-        # if choice == '1':
-        #     amount = float(input("Masukkan jumlah yang ingin disetor: "))
-        #     t.deposit(amount)
-        #     print("Setor tunai sebesar ${} berhasil dilakukan.".format(amount))
-        # elif choice == '2':
-        #     amount = float(input("Masukkan jumlah yang ingin ditarik: "))
-        #     t.withdraw(amount)
-        #     print("Tarik tunai sebesar ${} berhasil dilakukan.".format(amount))
-        # elif choice == '3':
-        #     t.show_balance()
-        # elif choice == '4':
-        #     break
-        # else:
-        #     print("Pilihan tidak valid. Silahkan pilih angka 1, 2, 3, atau 4.")
-
+    
     print("Terima kasih telah menggunakan layanan kami.")
