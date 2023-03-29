@@ -87,7 +87,7 @@ class Transaction:
     #### check order feature ####
     def check_order(self):
         # iterasi setiap nama barang if not in inventory -> execute
-        for item in self.cart:
+        for item in self.cart['Nama Item'].to_list():
             if item not in inventory:
                 print('Terdapat kesalahan input data')
                 break
