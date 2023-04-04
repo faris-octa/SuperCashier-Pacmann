@@ -110,13 +110,20 @@ class Transaction:
     #### check order feature ####
     def check_order(self):
         # iterasi setiap nama barang if not in inventory -> execute
-        for item in self.cart['nama_item'].to_list():
-            if item not in inventory:
-                print('------------Terdapat kesalahan input data------------')
-                break
-            else:
-                print('------------Pemesanan sudah benar------------')
-        print(self.cart)
+        # for item in self.cart['nama_item'].to_list():
+        #     if item not in inventory:
+        #         print('------------Terdapat kesalahan input data------------')
+        #         break
+        #     else:
+        #         print('------------Pesanan sudah benar------------')
+        
+        if all(item in inventory for item in list(self.cart['nama_item'])):
+            print('------------Pesanan sudah benar------------')
+        else:
+            print('------------Terdapat kesalahan input data------------')
+
+        index = list(range(1, len(self.cart)+1))
+        print(self.cart.set_index(pd.Series(index)))
     #############################
 
     #### checkout feature ####
@@ -212,3 +219,4 @@ if __name__ == "__main__":
 
     
     print("Terima kasih telah menggunakan layanan kami.")
+    
