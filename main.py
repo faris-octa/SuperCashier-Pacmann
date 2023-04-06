@@ -16,6 +16,7 @@ if __name__ == "__main__":
 
         choice = input("Masukkan pilihan anda (1/2/3/4/5): ")
         if choice == '5':
+            trnsct_123.check_out()
             break
 
         elif choice == '1':
@@ -65,9 +66,6 @@ if __name__ == "__main__":
                 continue
             else:
                 trnsct_123.check_order()
-
-        elif choice == '6':
-            trnsct_123.check_out()
 
         else:
             print("Pilihan tidak valid. Silahkan pilih angka 1, 2, 3, 4 atau 5")
