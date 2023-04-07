@@ -7,7 +7,6 @@ def insert_to_table(source_data, data):
     # create a connection to database
     try:
         conn = sqlite3.connect(source_data)
-        print('berhasil konek')
     except sqlite3.Error as error:
         print('gagal konek:', error)
     cursor = conn.cursor()
@@ -41,10 +40,22 @@ class Transaction:
         print("\n------------Selamat datang di e-Mart------------")
 
     #### add item feature ####
-    def add_item(self):
-        nama_item = input('nama_item: ')
-        jumlah_item = int(input('Jumlah: '))
-        harga_per_item = int(input('Harga: '))
+    # def add_item(self):
+    #     nama_item = input('nama_item: ')
+    #     jumlah_item = int(input('Jumlah: '))
+    #     harga_per_item = int(input('Harga: '))
+    #     harga_total = jumlah_item * harga_per_item
+    #     new_item = pd.DataFrame({
+    #                             'nama_item': [nama_item],
+    #                             'jumlah_item': [jumlah_item],
+    #                             'harga': [harga_per_item],
+    #                             'total_harga': [harga_total]
+    #                             })
+    #     self.cart = pd.concat([self.cart, new_item], ignore_index=True)
+    #     print(f"\n------------Berhasil memasukkan {nama_item} seharga Rp. {harga_per_item} sebanyak {jumlah_item} buah ke keranjang------------")
+    #     return self.cart
+    
+    def add_item(self, nama_item, jumlah_item, harga_per_item):
         harga_total = jumlah_item * harga_per_item
         new_item = pd.DataFrame({
                                 'nama_item': [nama_item],
@@ -103,13 +114,6 @@ class Transaction:
     #### check order feature ####
     def check_order(self):
         # iterasi setiap nama barang if not in inventory -> execute
-        # for item in self.cart['nama_item'].to_list():
-        #     if item not in inventory:
-        #         print('------------Terdapat kesalahan input data------------')
-        #         break
-        #     else:
-        #         print('------------Pesanan sudah benar------------')
-
         # dummy inventory
         inventory = ['gula', 'minyak goreng', 'beras']
         

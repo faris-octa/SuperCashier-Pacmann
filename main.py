@@ -15,19 +15,19 @@ if __name__ == "__main__":
         print("5. Checkout / Keluar")
 
         choice = input("Masukkan pilihan anda (1/2/3/4/5): ")
-        if choice == '5':
-            trnsct_123.check_out()
-            break
 
-        elif choice == '1':
-            print(trnsct_123.add_item())
+        if choice == '1':
+            nama_item = input('Nama Item: ')
+            jumlah_item = int(input('Jumlah: '))
+            harga_per_item = int(input('Harga: '))
+            print(trnsct_123.add_item(nama_item, jumlah_item, harga_per_item))
 
         elif choice == '2':
             nama_item = input('Nama barang yang ingin diubah: ').lower()
             if nama_item not in trnsct_123.cart['nama_item'].to_list():
                 print(f"\nTidak ada {nama_item} di keranjang")
             else:
-                print("\nApa yang ingin diupdate:")
+                print("\nApa yang ingin diubah:")
                 print("1. Nama Barang")
                 print("2. Jumlah Barang")
                 print("3. Harga Barang")
@@ -42,7 +42,7 @@ if __name__ == "__main__":
                     updated_item_price = int(input(f"harga barang {nama_item} diubah menjadi: "))
                     trnsct_123.update_item_price(nama_item, updated_item_price)
                 else:
-                    print("Pilihan tidak valid")
+                    print("------------Pilihan tidak valid------------")
 
         elif choice == '3':
             print("\nPilih opsi:")
@@ -58,8 +58,7 @@ if __name__ == "__main__":
             elif choice_remove == '2':
                 trnsct_123.reset_transaction()
             else:
-                print("Pilihan tidak valid")
-
+                print("------------Pilihan tidak valid------------")
 
         elif choice == '4':
             if trnsct_123.cart.empty:
@@ -67,9 +66,15 @@ if __name__ == "__main__":
             else:
                 trnsct_123.check_order()
 
+        elif choice == '5':
+            if trnsct_123.cart.empty:
+                break
+            trnsct_123.check_out()
+            break
+        
         else:
-            print("Pilihan tidak valid. Silahkan pilih angka 1, 2, 3, 4 atau 5")
+            print("------------Pilihan tidak valid. Silahkan pilih angka 1, 2, 3, 4 atau 5------------")
         
 
     
-    print("Terima kasih telah menggunakan layanan kami.")
+    print("------------Terima kasih telah menggunakan layanan kami------------")
