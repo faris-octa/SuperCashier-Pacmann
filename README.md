@@ -1,4 +1,4 @@
 # SuperCashier-Pacmann
 Self-service cashier system build with Python
 
-![flow-chart](https://drive.google.com/file/d/1TBmuheHyrQezs9juoX5MkmySjmOJDyRm/view?usp=sharing)
+![Super Cashier pacmann flowchart](https://user-images.githubusercontent.com/31800666/230696687-c88eb6f2-7386-4d48-9e19-2394533a8f7f.png)
