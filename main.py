@@ -80,5 +80,8 @@ if __name__ == "__main__":
         
         else:
             print("------------Pilihan tidak valid. Silahkan pilih angka 1, 2, 3, 4 atau 5------------")
-        
-    print("\n------------Terima kasih telah menggunakan layanan kami------------")
+
+    print("")    
+    print("-"*55)
+    print("Terima kasih telah menggunakan layanan kami")
+    print("-"*55)

@@ -12,7 +12,9 @@ class Transaction:
         return: cart (dataframe)
         """      
         self.cart = pd.DataFrame(columns=['nama_item', 'jumlah_item', 'harga', 'total_harga'])
-        print("\n------------Selamat datang di e-Mart------------")
+        print("-"*55)
+        print("SELAMAT DATANG DI E-MART")
+        print("-"*55)
 
     #### add item feature ####
     def add_item(self, nama_item, jumlah_item, harga_per_item):
