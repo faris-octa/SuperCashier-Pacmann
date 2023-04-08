@@ -1,4 +1,5 @@
 import transaction
+import db_loader
 
 if __name__ == "__main__":
     trnsct_123 = transaction.Transaction()
@@ -18,14 +19,14 @@ if __name__ == "__main__":
 
         if choice == '1':
             print("\nMemasukkan item ke keranjang...")
-            nama_item = input('Nama Item: ')
+            nama_item = input('Nama Item: ').title()
             jumlah_item = int(input('Jumlah: '))
             harga_per_item = int(input('Harga: '))
             trnsct_123.add_item(nama_item, jumlah_item, harga_per_item)
 
         elif choice == '2':
             print("\nMengubah item dalam keranjang...")
-            nama_item = input('Nama barang yang ingin diubah: ').lower()
+            nama_item = input('Nama barang yang ingin diubah: ').title()
             if nama_item not in trnsct_123.cart['nama_item'].to_list():
                 print(f"\nTidak ada {nama_item} di keranjang")
             else:
@@ -35,7 +36,7 @@ if __name__ == "__main__":
                 print("3. Harga Barang")
                 choice_update = input("Masukkan pilihan anda (1/2/3): ")
                 if choice_update == "1":
-                    updated_item = input(f'{nama_item} diubah menjadi: ')
+                    updated_item = input(f'{nama_item} diubah menjadi: ').title()
                     trnsct_123.update_item_name(nama_item, updated_item)
                 elif choice_update == "2":
                     updated_item_qty = int(input(f"jumlah barang {nama_item} diubah menjadi: "))
@@ -53,7 +54,7 @@ if __name__ == "__main__":
             print("2. Kosongkan keranjang belanja")
             choice_remove = input("Masukkan pilihan anda (1 or 2): ")
             if choice_remove == "1":
-                nama_item = input('Nama barang yang ingin dikeluarkan: ').lower()
+                nama_item = input('Nama barang yang ingin dikeluarkan: ').title()
                 if nama_item in trnsct_123.cart['nama_item'].to_list():
                     trnsct_123.delete_item(nama_item)
                 else:
@@ -72,12 +73,12 @@ if __name__ == "__main__":
         elif choice == '5':
             if trnsct_123.cart.empty:
                 break
-            trnsct_123.check_out()
+            data = trnsct_123.check_out()
+            # print(data) <-- for debugging
+            db_loader.insert_to_table(source_data='database.db', data = data)
             break
         
         else:
             print("------------Pilihan tidak valid. Silahkan pilih angka 1, 2, 3, 4 atau 5------------")
         
-
-    
-    print("------------Terima kasih telah menggunakan layanan kami------------")
+    print("\n------------Terima kasih telah menggunakan layanan kami------------")
