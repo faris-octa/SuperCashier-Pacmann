@@ -1,14 +1,24 @@
 #### for transactions modules
 import pandas as pd
 import sqlite3
+from tabulate import tabulate
 
 # insert data to database func.
 def insert_to_table(source_data, data):
+    """
+    Fungsi untuk mengimport daftar suatu transaksi ke database sqlite
+
+    args:
+            - source_data (str): nama database sqlite
+            - data (dataframe): dataframe transaksi
+
+    return: None
+    """
     # create a connection to database
     try:
         conn = sqlite3.connect(source_data)
     except sqlite3.Error as error:
-        print('gagal konek:', error)
+        print('Gagal terkoneksi dengan database:', error)
     cursor = conn.cursor()
     cursor.execute('''CREATE TABLE IF NOT EXISTS transactions 
                     (no_id INT, 
@@ -20,18 +30,17 @@ def insert_to_table(source_data, data):
                     harga_Diskon INT
                     )''')
     
-    # GET no_id -> no_id terakhir + 1
+    # GET no_id -> no_id terakhir di database + 1
     cursor.execute('SELECT MAX(no_id) FROM transactions')
     no_id = cursor.fetchone()[0] + 1
 
-    # assign column no_id dengan value = no_id
+    # ASSIGN kolom no_id
     data = pd.concat([pd.Series(no_id, index=data.index, name='no_id'), data], axis=1)
-    print(data)
+    # print(data) <-- for debugging
     data.to_sql('transactions', con=conn, if_exists='append', index=False)
 
     conn.commit()  
     conn.close()
-    print('koneksi ditutup') 
 
 class Transaction:
     # constructor buat dataframe kosong sebagai keranjang belanja
@@ -40,21 +49,6 @@ class Transaction:
         print("\n------------Selamat datang di e-Mart------------")
 
     #### add item feature ####
-    # def add_item(self):
-    #     nama_item = input('nama_item: ')
-    #     jumlah_item = int(input('Jumlah: '))
-    #     harga_per_item = int(input('Harga: '))
-    #     harga_total = jumlah_item * harga_per_item
-    #     new_item = pd.DataFrame({
-    #                             'nama_item': [nama_item],
-    #                             'jumlah_item': [jumlah_item],
-    #                             'harga': [harga_per_item],
-    #                             'total_harga': [harga_total]
-    #                             })
-    #     self.cart = pd.concat([self.cart, new_item], ignore_index=True)
-    #     print(f"\n------------Berhasil memasukkan {nama_item} seharga Rp. {harga_per_item} sebanyak {jumlah_item} buah ke keranjang------------")
-    #     return self.cart
-    
     def add_item(self, nama_item, jumlah_item, harga_per_item):
         harga_total = jumlah_item * harga_per_item
         new_item = pd.DataFrame({
@@ -113,6 +107,12 @@ class Transaction:
 
     #### check order feature ####
     def check_order(self):
+        """
+        Fungsi untuk menampilkan keranjang belanja saat ini
+
+        args: None
+        return: None
+        """
         # iterasi setiap nama barang if not in inventory -> execute
         # dummy inventory
         inventory = ['gula', 'minyak goreng', 'beras']
@@ -123,7 +123,9 @@ class Transaction:
             print('------------Terdapat kesalahan input data------------')
 
         index = list(range(1, len(self.cart)+1))
-        print(self.cart.set_index(pd.Series(index)))
+        cart = self.cart.set_index(pd.Series(index))
+        header = ['Nama Item', 'Jumlah Item', 'Harga', 'Total Harga']
+        print(tabulate(cart, headers= header, tablefmt='psql', numalign='center'))
     #############################
 
     #### checkout feature ####
@@ -138,6 +140,6 @@ class Transaction:
         receipt['harga_Diskon'] = receipt['total_harga'] - receipt['Diskon']
         total = receipt['harga_Diskon'].sum()
 
-        print(f'\nTotal nilai belanjaan: {total}')
+        print(f'\n------------Total nilai belanjaan: Rp. {total}------------')
         insert_to_table(source_data='database.db', data=receipt)
         return total

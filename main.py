@@ -17,12 +17,14 @@ if __name__ == "__main__":
         choice = input("Masukkan pilihan anda (1/2/3/4/5): ")
 
         if choice == '1':
+            print("\nMemasukkan item ke keranjang...")
             nama_item = input('Nama Item: ')
             jumlah_item = int(input('Jumlah: '))
             harga_per_item = int(input('Harga: '))
-            print(trnsct_123.add_item(nama_item, jumlah_item, harga_per_item))
+            trnsct_123.add_item(nama_item, jumlah_item, harga_per_item)
 
         elif choice == '2':
+            print("\nMengubah item dalam keranjang...")
             nama_item = input('Nama barang yang ingin diubah: ').lower()
             if nama_item not in trnsct_123.cart['nama_item'].to_list():
                 print(f"\nTidak ada {nama_item} di keranjang")
@@ -45,7 +47,8 @@ if __name__ == "__main__":
                     print("------------Pilihan tidak valid------------")
 
         elif choice == '3':
-            print("\nPilih opsi:")
+            print("\nMengeluarkan item dalam keranjang...")
+            print("Pilih opsi:")
             print("1. Keluarkan satu barang")
             print("2. Kosongkan keranjang belanja")
             choice_remove = input("Masukkan pilihan anda (1 or 2): ")
