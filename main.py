@@ -1,3 +1,8 @@
+"""
+the main program file that manages the program flow. Run this file to start the app.
+Moduls required: transaction and db_loader
+"""
+
 import transaction
 import db_loader
 
@@ -75,7 +80,7 @@ if __name__ == "__main__":
                 break
             data = trnsct_123.check_out()
             # print(data) <-- for debugging
-            db_loader.to_sqlite_table(source_data='database.db', data = data)
+            db_loader.insert_to_table(source_data='database.db', data = data)
             break
         
         else:
