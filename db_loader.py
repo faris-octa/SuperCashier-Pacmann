@@ -1,9 +1,15 @@
+"""
+Modul db_loader bertujuan untuk melakukan transfer data ke database.
+Modul ini memiliki satu fungsi bernama insert_to_table yang melakukan
+load data ke sebuah table di database sqlite3.
+"""
+
 import pandas as pd
 import sqlite3
 
 def insert_to_table(source_data, data):
     """
-    Fungsi untuk mengimport daftar suatu transaksi ke database sqlite
+    Fungsi untuk mengimport daftar suatu transaksi ke database sqlite3
 
     args:
         - source_data (str): nama database sqlite

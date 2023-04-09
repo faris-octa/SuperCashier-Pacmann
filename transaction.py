@@ -1,23 +1,38 @@
-#### for transactions modules
+"""
+Modul transaction bertujuan sebagai sekumpulan fungsi utama proses transaksi digital.
+Modul ini terdiri dari Class Transaction yang memiliki satu attributes inisiasi dan beberapa method.
+"""
+
+# import library
 import pandas as pd
 from tabulate import tabulate
 
 class Transaction:
-    # constructor buat dataframe kosong sebagai keranjang belanja
+    # constructor cart -> dataframe
     def __init__(self):
         """"
-        Konstruktor inisiasi setiap pemanggilan objek transaksi
+        Konstruktor inisiasi yang melakukann pembuatan (cart) berupa dataframe kosong
 
         args: None
-        return: cart (dataframe)
+        return: 
+            - cart (dataframe)
         """      
         self.cart = pd.DataFrame(columns=['nama_item', 'jumlah_item', 'harga', 'total_harga'])
         print("-"*55)
         print("SELAMAT DATANG DI E-MART")
         print("-"*55)
 
-    #### add item feature ####
     def add_item(self, nama_item, jumlah_item, harga_per_item):
+        """"
+        Method yang berfungsi menambahkan item, jumlah, dan harga ke cart
+
+        args: 
+            - nama_item (str)
+            - jumlah_item (int)
+            - harga_per_item (float)
+        return: 
+            - cart (dataframe)
+        """  
         harga_total = jumlah_item * harga_per_item
         new_item = pd.DataFrame({
                                 'nama_item': [nama_item],
@@ -28,10 +43,17 @@ class Transaction:
         self.cart = pd.concat([self.cart, new_item], ignore_index=True)
         print(f"\n------------Berhasil memasukkan {nama_item} seharga Rp. {harga_per_item} sebanyak {jumlah_item} buah ke keranjang------------")
         return self.cart
-    ##########################
-
-    #### update item features ####
+   
     def update_item_name(self, nama_item, nama_item_updated):
+        """"
+        Method yang berfungsi untuk melakukan update terhadap nama suatu item di dalam cart
+
+        args: 
+            - nama_item (str)
+            - nama_item_updated (str)
+        return: 
+            - cart (dataframe)
+        """
         # cari baris dengan item yang diinginkan
         updated_row = self.cart['nama_item'] == nama_item
         # ganti nilai nama_item menjadi nama_item yang baru
@@ -40,6 +62,15 @@ class Transaction:
         return self.cart
 
     def update_item_qty(self, nama_item, qty_item_updated):
+        """"
+        Method yang berfungsi untuk melakukan update terhadap kuantitas suatu item di dalam cart
+
+        args: 
+            - nama_item (str)
+            - qty_item_updated (int)
+        return: 
+            - cart (dataframe)
+        """
         # cari baris berdasarkan nama_item
         updated_row = self.cart['nama_item'] == nama_item
         # ubah jumlah_itemnya
@@ -50,6 +81,15 @@ class Transaction:
         return self.cart
 
     def update_item_price(self, nama_item, price_item_updated):
+        """"
+        Method yang berfungsi untuk melakukan update terhadap harga suatu item di dalam cart
+
+        args: 
+            - nama_item (str)
+            - price_item_updated (int)
+        return: 
+            - cart (dataframe)
+        """
         # cari baris yang diinginkan
         updated_row = self.cart['nama_item'] == nama_item
         # update harganya
@@ -57,31 +97,42 @@ class Transaction:
         self.cart.loc[updated_row, 'total_harga'] = price_item_updated * self.cart.loc[updated_row, 'jumlah_item']
         print(f"\n------------Harga Item {nama_item} telah diupdate menjadi Rp. {price_item_updated}------------")
         return self.cart
-    ##############################
 
-    #### delete item feature ####
     def delete_item(self, nama_item):
+        """"
+        Method yang berfungsi untuk melakukan penghapusan terhadap suatu item dari cart
+
+        args: 
+            - nama_item (str)
+        return: 
+            - cart (dataframe)
+        """
         deleted_item = self.cart.loc[self.cart['nama_item'] == nama_item]
         self.cart.drop(deleted_item.index, inplace=True)
         print(f"\n------------Berhasil mengeluarkan {nama_item} dari keranjang belanja------------")
         return self.cart
-    #############################
 
-    #### empty cart feature ####
     def reset_transaction(self):
+        """"
+        Method yang berfungsi untuk melakukan pengosongan cart
+
+        args: 
+            - None
+        return: 
+            - cart (dataframe)
+        """
         self.cart = self.cart.iloc[0:0]
         return self.cart
-    ############################
 
-    #### check order feature ####
     def check_order(self):
         """
-        Fungsi untuk menampilkan keranjang belanja saat ini
+        Fungsi untuk menampilkan status cart saat ini
 
-        args: None
-        return: None
+        args: 
+            - None
+        return: 
+            - None
         """
-        # iterasi setiap nama barang if not in inventory -> execute
         # dummy inventory
         inventory = ['Gula', 'Minyak Goreng', 'Beras',
                      'Ayam Goreng', 'Pasta Gigi',
@@ -96,10 +147,15 @@ class Transaction:
         cart = self.cart.set_index(pd.Series(index))
         header = ['Nama Item', 'Jumlah Item', 'Harga', 'Total Harga']
         print(tabulate(cart, headers= header, tablefmt='psql', numalign='center'))
-    #############################
 
-    #### checkout feature ####
     def check_out(self):
+        """"
+        Method yang berfungsi untuk mengakumulasi seluruh belanjaan di dalam cart beserta diskon yang dikenakan
+
+        args: 
+            - None
+        return: receipt (dataframe)
+        """
         # modifikasi cart agar strukturnya sesuai dengan database
         receipt = self.cart
         receipt['diskon'] = 0
