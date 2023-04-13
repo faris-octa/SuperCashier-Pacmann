@@ -27,14 +27,19 @@ Berikut alur kerja program:
 - Checkout / Keluar
 
 3. Jika memilih pilihan 1, akan diminta untuk memasukkan nama barang, jumlah, dan harga per item yang ingin dimasukkan ke keranjang.
+![input_item](https://user-images.githubusercontent.com/31800666/231710642-030e5600-edc7-4bd5-85f6-8c5a1be73c26.png)
 
 4. Jika memilih pilihan 2, akan diminta untuk memasukkan nama barang yang ingin diubah dan kemudian memilih opsi apa yang ingin diubah: nama barang, jumlah barang, atau harga barang.
+![update_item](https://user-images.githubusercontent.com/31800666/231711424-53a302b1-7b76-40eb-828a-f9beca0dc6d4.png)
 
 5. Jika memilih pilihan 3, akan diminta untuk memilih opsi apa yang ingin dilakukan: mengeluarkan satu barang atau mengosongkan keranjang belanja.
+![delete_item](https://user-images.githubusercontent.com/31800666/231711938-e865ed23-7c5a-4fd4-9be1-c545fb32fb70.png)
 
 6. Jika memilih pilihan 4, akan menampilkan status keranjang belanja saat ini.
+![check_order](https://user-images.githubusercontent.com/31800666/231712206-5fcc37c6-0d96-42fb-8bf0-7be9eee070f0.png)
 
 7. Jika memilih pilihan 5, program akan mengakumulasi seluruh barang di dalam keranjang belanja, menghitung diskon yang dikenakan, dan menampilkan total nilai belanja. Data transaksi akan disimpan ke dalam database SQLite3 dengan nama database.db.
+![check_out](https://user-images.githubusercontent.com/31800666/231713338-8b91c0df-08d7-4291-81a0-e5f083a96e1b.png)
 
 ## Kontribusi
 
