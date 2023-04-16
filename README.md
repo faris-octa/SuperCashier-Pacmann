@@ -26,7 +26,7 @@ Berikut alur kerja program:
 - Check keranjang belanja
 - Checkout / Keluar
 
-3. Jika memilih pilihan 1, pengguna dapat memasukkan nama barang, jumlah, dan harga per item yang ingin dimasukkan ke keranjang.
+3. Jika memilih pilihan 1, pengguna dapat memasukkan item yang ingin dimasukkan ke keranjang.
 ![input_item](https://user-images.githubusercontent.com/31800666/231710642-030e5600-edc7-4bd5-85f6-8c5a1be73c26.png)
 
 4. Jika memilih pilihan 2, pengguna dapat mengubah barang di keranjang.
